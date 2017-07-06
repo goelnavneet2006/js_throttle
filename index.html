@@ -1,0 +1,46 @@
+<script type="text/javascript">
+// Develop "throttle" function, i.e. a function that should return a new function
+// that would be called no more than once per specified timeout.
+// throttle(fn1, timeout) -> fn2
+
+
+// Example usage might be:
+// var foo = function() { console.log(“test”); };
+// var throttledFoo = throttle(foo, 1000);
+// throttledFoo();
+// throttledFoo();
+// throttledFoo();
+// // 1 second passed
+// throttledFoo(); //log
+// throttledFoo(); //not
+// throttledFoo(); //not
+
+
+
+
+function throttle(fn, timeout) {
+    var fistCallTime = undefined;
+    return function (...args) {
+        var currentTime = Date.now();
+        if (!fistCallTime || (currentTime - fistCallTime > timeout)) {
+            fistCallTime = Date.now();
+            return fn.apply(null, args);
+        }
+    };
+}
+
+
+var throttledFoo = throttle(function testFunction(a,b) {console.log(arguments[0])}, 1000);
+
+
+throttledFoo(1);
+throttledFoo(2);
+throttledFoo(3);
+
+
+setTimeout(throttledFoo, 1500);
+setTimeout(throttledFoo, 1600);
+
+</script>
+
+
