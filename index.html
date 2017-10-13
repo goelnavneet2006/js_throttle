@@ -19,11 +19,11 @@
 
 
 function throttle(fn, timeout) {
-    var fistCallTime = undefined;
+    var lastCallTime = undefined;
     return function (...args) {
         var currentTime = Date.now();
-        if (!fistCallTime || (currentTime - fistCallTime > timeout)) {
-            fistCallTime = Date.now();
+        if (!lastCallTime || (currentTime - lastCallTime > timeout)) {
+            lastCallTime = currentTime;
             return fn.apply(null, args);
         }
     };
